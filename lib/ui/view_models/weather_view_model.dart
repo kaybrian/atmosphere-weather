@@ -1,4 +1,5 @@
 import 'package:flutter/foundation.dart';
+
 import '../../data/models/air_quality_model.dart';
 import '../../data/models/location_model.dart';
 import '../../data/models/weather_alert_model.dart';
@@ -9,7 +10,7 @@ class WeatherViewModel extends ChangeNotifier {
   final WeatherRepository _repository;
 
   WeatherViewModel({WeatherRepository? repository})
-      : _repository = repository ?? WeatherRepository();
+    : _repository = repository ?? WeatherRepository();
 
   WeatherData? _weatherData;
   WeatherData? get weatherData => _weatherData;
@@ -68,9 +69,11 @@ class WeatherViewModel extends ChangeNotifier {
   }
 
   bool isLocationFavorite(LocationModel location) {
-    return _favoriteLocations.any((loc) =>
-        (loc.latitude - location.latitude).abs() < 0.05 &&
-        (loc.longitude - location.longitude).abs() < 0.05);
+    return _favoriteLocations.any(
+      (loc) =>
+          (loc.latitude - location.latitude).abs() < 0.05 &&
+          (loc.longitude - location.longitude).abs() < 0.05,
+    );
   }
 
   Future<void> init() async {
@@ -101,11 +104,13 @@ class WeatherViewModel extends ChangeNotifier {
       }
 
       final savedLast = await _repository.getLastLocation();
-      _selectedLocation = savedLast ?? _currentLocation ?? _repository.getPopularCities().first;
+      _selectedLocation =
+          savedLast ?? _currentLocation ?? _repository.getPopularCities().first;
 
       await _fetchWeatherAndAqiForSelected();
     } catch (e) {
-      _errorMessage = 'Unable to load weather data. Please check your internet connection.';
+      _errorMessage =
+          'Unable to load weather data. Please check your internet connection.';
     } finally {
       _isLoading = false;
       notifyListeners();
@@ -201,9 +206,11 @@ class WeatherViewModel extends ChangeNotifier {
   }
 
   Future<void> toggleFavorite(LocationModel location) async {
-    final existingIndex = _favoriteLocations.indexWhere((loc) =>
-        (loc.latitude - location.latitude).abs() < 0.05 &&
-        (loc.longitude - location.longitude).abs() < 0.05);
+    final existingIndex = _favoriteLocations.indexWhere(
+      (loc) =>
+          (loc.latitude - location.latitude).abs() < 0.05 &&
+          (loc.longitude - location.longitude).abs() < 0.05,
+    );
 
     if (existingIndex >= 0) {
       _favoriteLocations.removeAt(existingIndex);

@@ -1,6 +1,8 @@
 import 'dart:convert';
+
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
+
 import '../models/air_quality_model.dart';
 import '../models/weather_model.dart';
 
@@ -10,7 +12,8 @@ class WeatherApiService {
   WeatherApiService({http.Client? client}) : _client = client ?? http.Client();
 
   static const String _baseUrl = 'https://api.open-meteo.com/v1/forecast';
-  static const String _aqiBaseUrl = 'https://air-quality-api.open-meteo.com/v1/air-quality';
+  static const String _aqiBaseUrl =
+      'https://air-quality-api.open-meteo.com/v1/air-quality';
 
   Future<WeatherData> fetchWeather({
     required double latitude,
@@ -57,10 +60,9 @@ class WeatherApiService {
     final uri = Uri.parse(_baseUrl).replace(queryParameters: queryParams);
 
     try {
-      final response = await _client.get(
-        uri,
-        headers: {'Accept': 'application/json'},
-      ).timeout(const Duration(seconds: 12));
+      final response = await _client
+          .get(uri, headers: {'Accept': 'application/json'})
+          .timeout(const Duration(seconds: 12));
 
       if (response.statusCode == 200) {
         final decoded = json.decode(response.body) as Map<String, dynamic>;
@@ -96,10 +98,9 @@ class WeatherApiService {
     final uri = Uri.parse(_aqiBaseUrl).replace(queryParameters: queryParams);
 
     try {
-      final response = await _client.get(
-        uri,
-        headers: {'Accept': 'application/json'},
-      ).timeout(const Duration(seconds: 10));
+      final response = await _client
+          .get(uri, headers: {'Accept': 'application/json'})
+          .timeout(const Duration(seconds: 10));
 
       if (response.statusCode == 200) {
         final decoded = json.decode(response.body) as Map<String, dynamic>;

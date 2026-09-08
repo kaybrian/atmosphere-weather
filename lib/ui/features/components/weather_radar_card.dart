@@ -1,6 +1,8 @@
 import 'dart:math' as math;
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+
 import '../../../data/models/location_model.dart';
 import '../../core/app_theme.dart';
 
@@ -155,16 +157,24 @@ class _WeatherRadarCardState extends State<WeatherRadarCard>
                             border: Border.all(color: Colors.white, width: 1.5),
                             boxShadow: [
                               BoxShadow(
-                                color: const Color(0xFF29B6F6).withValues(alpha: 0.8),
+                                color: const Color(0xFF29B6F6)
+                                    .withValues(alpha: 0.8),
                                 blurRadius: 8,
                               ),
                             ],
                           ),
-                          child: const Icon(Icons.my_location, size: 12, color: Colors.white),
+                          child: const Icon(
+                            Icons.my_location,
+                            size: 12,
+                            color: Colors.white,
+                          ),
                         ),
                         const SizedBox(height: 4),
                         Container(
-                          padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 6,
+                            vertical: 2,
+                          ),
                           decoration: BoxDecoration(
                             color: Colors.black.withValues(alpha: 0.6),
                             borderRadius: BorderRadius.circular(4),
@@ -190,12 +200,16 @@ class _WeatherRadarCardState extends State<WeatherRadarCard>
                       mainAxisSize: MainAxisSize.min,
                       children: [
                         _buildGlassButton(
-                          icon: _isPlaying ? CupertinoIcons.pause_fill : CupertinoIcons.play_fill,
+                          icon: _isPlaying
+                              ? CupertinoIcons.pause_fill
+                              : CupertinoIcons.play_fill,
                           onTap: _togglePlayback,
                         ),
                         const SizedBox(width: 6),
                         _buildGlassButton(
-                          icon: _zoomLevel == 1.0 ? CupertinoIcons.plus_circle : CupertinoIcons.minus_circle,
+                          icon: _zoomLevel == 1.0
+                              ? CupertinoIcons.plus_circle
+                              : CupertinoIcons.minus_circle,
                           onTap: _toggleZoom,
                         ),
                       ],
@@ -227,7 +241,10 @@ class _WeatherRadarCardState extends State<WeatherRadarCard>
             children: [
               Text(
                 'Light',
-                style: TextStyle(color: Colors.white.withValues(alpha: 0.5), fontSize: 10),
+                style: TextStyle(
+                  color: Colors.white.withValues(alpha: 0.5),
+                  fontSize: 10,
+                ),
               ),
               const SizedBox(width: 6),
               Expanded(
@@ -251,7 +268,10 @@ class _WeatherRadarCardState extends State<WeatherRadarCard>
               const SizedBox(width: 6),
               Text(
                 'Heavy',
-                style: TextStyle(color: Colors.white.withValues(alpha: 0.5), fontSize: 10),
+                style: TextStyle(
+                  color: Colors.white.withValues(alpha: 0.5),
+                  fontSize: 10,
+                ),
               ),
             ],
           ),
@@ -260,7 +280,10 @@ class _WeatherRadarCardState extends State<WeatherRadarCard>
     );
   }
 
-  Widget _buildGlassButton({required IconData icon, required VoidCallback onTap}) {
+  Widget _buildGlassButton({
+    required IconData icon,
+    required VoidCallback onTap,
+  }) {
     return GestureDetector(
       onTap: onTap,
       child: Container(
@@ -306,8 +329,16 @@ class _RadarCanvasPainter extends CustomPainter {
     final axisPaint = Paint()
       ..color = const Color(0xFF1E88E5).withValues(alpha: 0.15)
       ..strokeWidth = 1.0;
-    canvas.drawLine(Offset(center.dx, 0), Offset(center.dx, size.height), axisPaint);
-    canvas.drawLine(Offset(0, center.dy), Offset(size.width, center.dy), axisPaint);
+    canvas.drawLine(
+      Offset(center.dx, 0),
+      Offset(center.dx, size.height),
+      axisPaint,
+    );
+    canvas.drawLine(
+      Offset(0, center.dy),
+      Offset(size.width, center.dy),
+      axisPaint,
+    );
 
     // 3. Simulated Precipitation Cloud Cells
     final cells = [
@@ -326,8 +357,10 @@ class _RadarCanvasPainter extends CustomPainter {
 
       final cloudPaint = Paint()
         ..color = i % 2 == 0
-            ? const Color(0xFF43A047).withValues(alpha: baseAlpha * 0.4) // Green rain
-            : const Color(0xFF039BE5).withValues(alpha: baseAlpha * 0.5) // Cyan showers
+            ? const Color(0xFF43A047)
+                  .withValues(alpha: baseAlpha * 0.4) // Green rain
+            : const Color(0xFF039BE5)
+                  .withValues(alpha: baseAlpha * 0.5) // Cyan showers
         ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 16);
 
       canvas.drawCircle(cell, radius, cloudPaint);
@@ -335,7 +368,8 @@ class _RadarCanvasPainter extends CustomPainter {
       // Core of cell
       final corePaint = Paint()
         ..color = i == 0 && precipVolume > 1.0
-            ? const Color(0xFFFFB300).withValues(alpha: 0.7) // Amber heavier core
+            ? const Color(0xFFFFB300)
+                  .withValues(alpha: 0.7) // Amber heavier core
             : const Color(0xFF4CAF50).withValues(alpha: 0.5)
         ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 8);
       canvas.drawCircle(cell, radius * 0.45, corePaint);

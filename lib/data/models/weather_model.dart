@@ -32,8 +32,12 @@ class WeatherCondition {
         return WeatherCondition(
           code: code,
           description: isDay ? 'Clear Sky' : 'Clear Night',
-          icon: isDay ? CupertinoIcons.sun_max_fill : CupertinoIcons.moon_stars_fill,
-          themeType: isDay ? WeatherThemeType.clearDay : WeatherThemeType.clearNight,
+          icon: isDay
+              ? CupertinoIcons.sun_max_fill
+              : CupertinoIcons.moon_stars_fill,
+          themeType: isDay
+              ? WeatherThemeType.clearDay
+              : WeatherThemeType.clearNight,
           isDay: isDay,
         );
       case 1:
@@ -41,15 +45,21 @@ class WeatherCondition {
           code: code,
           description: isDay ? 'Mainly Clear' : 'Mostly Clear',
           icon: isDay ? CupertinoIcons.sun_min_fill : CupertinoIcons.moon_fill,
-          themeType: isDay ? WeatherThemeType.clearDay : WeatherThemeType.clearNight,
+          themeType: isDay
+              ? WeatherThemeType.clearDay
+              : WeatherThemeType.clearNight,
           isDay: isDay,
         );
       case 2:
         return WeatherCondition(
           code: code,
           description: 'Partly Cloudy',
-          icon: isDay ? CupertinoIcons.cloud_sun_fill : CupertinoIcons.cloud_moon_fill,
-          themeType: isDay ? WeatherThemeType.cloudyDay : WeatherThemeType.cloudyNight,
+          icon: isDay
+              ? CupertinoIcons.cloud_sun_fill
+              : CupertinoIcons.cloud_moon_fill,
+          themeType: isDay
+              ? WeatherThemeType.cloudyDay
+              : WeatherThemeType.cloudyNight,
           isDay: isDay,
         );
       case 3:
@@ -57,7 +67,9 @@ class WeatherCondition {
           code: code,
           description: 'Overcast',
           icon: CupertinoIcons.cloud_fill,
-          themeType: isDay ? WeatherThemeType.cloudyDay : WeatherThemeType.cloudyNight,
+          themeType: isDay
+              ? WeatherThemeType.cloudyDay
+              : WeatherThemeType.cloudyNight,
           isDay: isDay,
         );
       case 45:
@@ -84,8 +96,8 @@ class WeatherCondition {
           description: code == 51
               ? 'Light Drizzle'
               : code == 53
-                  ? 'Moderate Drizzle'
-                  : 'Dense Drizzle',
+              ? 'Moderate Drizzle'
+              : 'Dense Drizzle',
           icon: CupertinoIcons.cloud_drizzle_fill,
           themeType: WeatherThemeType.rainy,
           isDay: isDay,
@@ -141,10 +153,10 @@ class WeatherCondition {
           description: code == 71
               ? 'Slight Snowfall'
               : code == 73
-                  ? 'Moderate Snowfall'
-                  : code == 75
-                      ? 'Heavy Snowfall'
-                      : 'Snow Grains',
+              ? 'Moderate Snowfall'
+              : code == 75
+              ? 'Heavy Snowfall'
+              : 'Snow Grains',
           icon: CupertinoIcons.snow,
           themeType: WeatherThemeType.snowy,
           isDay: isDay,
@@ -157,8 +169,8 @@ class WeatherCondition {
           description: code == 80
               ? 'Slight Rain Showers'
               : code == 81
-                  ? 'Moderate Rain Showers'
-                  : 'Violent Rain Showers',
+              ? 'Moderate Rain Showers'
+              : 'Violent Rain Showers',
           icon: CupertinoIcons.cloud_rain_fill,
           themeType: WeatherThemeType.rainy,
           isDay: isDay,
@@ -194,7 +206,9 @@ class WeatherCondition {
           code: code,
           description: 'Clear',
           icon: isDay ? CupertinoIcons.sun_max_fill : CupertinoIcons.moon_fill,
-          themeType: isDay ? WeatherThemeType.clearDay : WeatherThemeType.clearNight,
+          themeType: isDay
+              ? WeatherThemeType.clearDay
+              : WeatherThemeType.clearNight,
           isDay: isDay,
         );
     }
@@ -246,10 +260,14 @@ class CurrentWeather {
     };
   }
 
-  factory CurrentWeather.fromJson(Map<String, dynamic> current, Map<String, dynamic> hourly) {
+  factory CurrentWeather.fromJson(
+    Map<String, dynamic> current,
+    Map<String, dynamic> hourly,
+  ) {
     final isDay = (current['is_day'] as num? ?? 1) == 1;
     final code = (current['weather_code'] as num? ?? 0).toInt();
-    final timeStr = current['time'] as String? ?? DateTime.now().toIso8601String();
+    final timeStr =
+        current['time'] as String? ?? DateTime.now().toIso8601String();
     final time = DateTime.tryParse(timeStr) ?? DateTime.now();
 
     // Extract first UV index from hourly if present
@@ -260,13 +278,18 @@ class CurrentWeather {
 
     return CurrentWeather(
       temperature: (current['temperature_2m'] as num? ?? 0.0).toDouble(),
-      apparentTemperature: (current['apparent_temperature'] as num? ?? current['temperature_2m'] as num? ?? 0.0).toDouble(),
+      apparentTemperature:
+          (current['apparent_temperature'] as num? ??
+                  current['temperature_2m'] as num? ??
+                  0.0)
+              .toDouble(),
       weatherCode: code,
       condition: WeatherCondition.fromWmoCode(code, isDay: isDay),
       relativeHumidity: (current['relative_humidity_2m'] as num? ?? 50).toInt(),
       windSpeed: (current['wind_speed_10m'] as num? ?? 0.0).toDouble(),
       windDirection: (current['wind_direction_10m'] as num? ?? 0).toInt(),
-      surfacePressure: (current['surface_pressure'] as num? ?? 1013.25).toDouble(),
+      surfacePressure: (current['surface_pressure'] as num? ?? 1013.25)
+          .toDouble(),
       uvIndex: uv,
       precipitation: (current['precipitation'] as num? ?? 0.0).toDouble(),
       isDay: isDay,
@@ -310,7 +333,8 @@ class HourlyForecast {
       temperature: (json['temperature'] as num).toDouble(),
       weatherCode: code,
       condition: WeatherCondition.fromWmoCode(code, isDay: isDay),
-      precipitationProbability: (json['precipitationProbability'] as num? ?? 0).toInt(),
+      precipitationProbability: (json['precipitationProbability'] as num? ?? 0)
+          .toInt(),
       isDay: isDay,
     );
   }
@@ -363,11 +387,16 @@ class DailyForecast {
       minTemperature: (json['minTemperature'] as num).toDouble(),
       weatherCode: code,
       condition: WeatherCondition.fromWmoCode(code, isDay: true),
-      precipitationProbability: (json['precipitationProbability'] as num? ?? 0).toInt(),
+      precipitationProbability: (json['precipitationProbability'] as num? ?? 0)
+          .toInt(),
       precipitationSum: (json['precipitationSum'] as num? ?? 0.0).toDouble(),
       uvIndexMax: (json['uvIndexMax'] as num? ?? 0.0).toDouble(),
-      sunrise: json['sunrise'] != null ? DateTime.tryParse(json['sunrise'] as String) : null,
-      sunset: json['sunset'] != null ? DateTime.tryParse(json['sunset'] as String) : null,
+      sunrise: json['sunrise'] != null
+          ? DateTime.tryParse(json['sunrise'] as String)
+          : null,
+      sunset: json['sunset'] != null
+          ? DateTime.tryParse(json['sunset'] as String)
+          : null,
     );
   }
 }
@@ -411,11 +440,17 @@ class WeatherData {
     final currentWeather = CurrentWeather.fromJson(currentMap, hourlyMap);
 
     // Parse Hourly (up to 48 hours)
-    final hourlyTimes = (hourlyMap['time'] as List<dynamic>? ?? []).cast<String>();
-    final hourlyTemps = (hourlyMap['temperature_2m'] as List<dynamic>? ?? []).cast<num>();
-    final hourlyCodes = (hourlyMap['weather_code'] as List<dynamic>? ?? []).cast<num>();
-    final hourlyIsDay = (hourlyMap['is_day'] as List<dynamic>? ?? []).cast<num>();
-    final hourlyPrecipProb = (hourlyMap['precipitation_probability'] as List<dynamic>? ?? []).cast<num>();
+    final hourlyTimes = (hourlyMap['time'] as List<dynamic>? ?? [])
+        .cast<String>();
+    final hourlyTemps = (hourlyMap['temperature_2m'] as List<dynamic>? ?? [])
+        .cast<num>();
+    final hourlyCodes = (hourlyMap['weather_code'] as List<dynamic>? ?? [])
+        .cast<num>();
+    final hourlyIsDay = (hourlyMap['is_day'] as List<dynamic>? ?? [])
+        .cast<num>();
+    final hourlyPrecipProb =
+        (hourlyMap['precipitation_probability'] as List<dynamic>? ?? [])
+            .cast<num>();
 
     final List<HourlyForecast> hourlyList = [];
     final int countHourly = hourlyTimes.length.clamp(0, 48);
@@ -425,28 +460,42 @@ class WeatherData {
       final isDay = i < hourlyIsDay.length ? (hourlyIsDay[i] == 1) : true;
       final code = i < hourlyCodes.length ? hourlyCodes[i].toInt() : 0;
       final temp = i < hourlyTemps.length ? hourlyTemps[i].toDouble() : 0.0;
-      final precipProb = i < hourlyPrecipProb.length ? hourlyPrecipProb[i].toInt() : 0;
+      final precipProb = i < hourlyPrecipProb.length
+          ? hourlyPrecipProb[i].toInt()
+          : 0;
 
-      hourlyList.add(HourlyForecast(
-        time: time,
-        temperature: temp,
-        weatherCode: code,
-        condition: WeatherCondition.fromWmoCode(code, isDay: isDay),
-        precipitationProbability: precipProb,
-        isDay: isDay,
-      ));
+      hourlyList.add(
+        HourlyForecast(
+          time: time,
+          temperature: temp,
+          weatherCode: code,
+          condition: WeatherCondition.fromWmoCode(code, isDay: isDay),
+          precipitationProbability: precipProb,
+          isDay: isDay,
+        ),
+      );
     }
 
     // Parse Daily (up to 7-10 days)
-    final dailyTimes = (dailyMap['time'] as List<dynamic>? ?? []).cast<String>();
-    final dailyMaxTemps = (dailyMap['temperature_2m_max'] as List<dynamic>? ?? []).cast<num>();
-    final dailyMinTemps = (dailyMap['temperature_2m_min'] as List<dynamic>? ?? []).cast<num>();
-    final dailyCodes = (dailyMap['weather_code'] as List<dynamic>? ?? []).cast<num>();
-    final dailyPrecipProb = (dailyMap['precipitation_probability_max'] as List<dynamic>? ?? []).cast<num>();
-    final dailyPrecipSum = (dailyMap['precipitation_sum'] as List<dynamic>? ?? []).cast<num>();
-    final dailyUvMax = (dailyMap['uv_index_max'] as List<dynamic>? ?? []).cast<num>();
-    final dailySunrises = (dailyMap['sunrise'] as List<dynamic>? ?? []).cast<String>();
-    final dailySunsets = (dailyMap['sunset'] as List<dynamic>? ?? []).cast<String>();
+    final dailyTimes = (dailyMap['time'] as List<dynamic>? ?? [])
+        .cast<String>();
+    final dailyMaxTemps =
+        (dailyMap['temperature_2m_max'] as List<dynamic>? ?? []).cast<num>();
+    final dailyMinTemps =
+        (dailyMap['temperature_2m_min'] as List<dynamic>? ?? []).cast<num>();
+    final dailyCodes = (dailyMap['weather_code'] as List<dynamic>? ?? [])
+        .cast<num>();
+    final dailyPrecipProb =
+        (dailyMap['precipitation_probability_max'] as List<dynamic>? ?? [])
+            .cast<num>();
+    final dailyPrecipSum =
+        (dailyMap['precipitation_sum'] as List<dynamic>? ?? []).cast<num>();
+    final dailyUvMax = (dailyMap['uv_index_max'] as List<dynamic>? ?? [])
+        .cast<num>();
+    final dailySunrises = (dailyMap['sunrise'] as List<dynamic>? ?? [])
+        .cast<String>();
+    final dailySunsets = (dailyMap['sunset'] as List<dynamic>? ?? [])
+        .cast<String>();
 
     final List<DailyForecast> dailyList = [];
     final int countDaily = dailyTimes.length.clamp(0, 10);
@@ -455,30 +504,44 @@ class WeatherData {
 
     for (int i = 0; i < countDaily; i++) {
       final date = DateTime.tryParse(dailyTimes[i]) ?? DateTime.now();
-      final minTemp = i < dailyMinTemps.length ? dailyMinTemps[i].toDouble() : 0.0;
-      final maxTemp = i < dailyMaxTemps.length ? dailyMaxTemps[i].toDouble() : 0.0;
+      final minTemp = i < dailyMinTemps.length
+          ? dailyMinTemps[i].toDouble()
+          : 0.0;
+      final maxTemp = i < dailyMaxTemps.length
+          ? dailyMaxTemps[i].toDouble()
+          : 0.0;
       final code = i < dailyCodes.length ? dailyCodes[i].toInt() : 0;
-      final precipProb = i < dailyPrecipProb.length ? dailyPrecipProb[i].toInt() : 0;
-      final precipSum = i < dailyPrecipSum.length ? dailyPrecipSum[i].toDouble() : 0.0;
+      final precipProb = i < dailyPrecipProb.length
+          ? dailyPrecipProb[i].toInt()
+          : 0;
+      final precipSum = i < dailyPrecipSum.length
+          ? dailyPrecipSum[i].toDouble()
+          : 0.0;
       final uvMax = i < dailyUvMax.length ? dailyUvMax[i].toDouble() : 0.0;
-      final sunrise = i < dailySunrises.length ? DateTime.tryParse(dailySunrises[i]) : null;
-      final sunset = i < dailySunsets.length ? DateTime.tryParse(dailySunsets[i]) : null;
+      final sunrise = i < dailySunrises.length
+          ? DateTime.tryParse(dailySunrises[i])
+          : null;
+      final sunset = i < dailySunsets.length
+          ? DateTime.tryParse(dailySunsets[i])
+          : null;
 
       if (minTemp < minWeek) minWeek = minTemp;
       if (maxTemp > maxWeek) maxWeek = maxTemp;
 
-      dailyList.add(DailyForecast(
-        date: date,
-        minTemperature: minTemp,
-        maxTemperature: maxTemp,
-        weatherCode: code,
-        condition: WeatherCondition.fromWmoCode(code, isDay: true),
-        precipitationProbability: precipProb,
-        precipitationSum: precipSum,
-        uvIndexMax: uvMax,
-        sunrise: sunrise,
-        sunset: sunset,
-      ));
+      dailyList.add(
+        DailyForecast(
+          date: date,
+          minTemperature: minTemp,
+          maxTemperature: maxTemp,
+          weatherCode: code,
+          condition: WeatherCondition.fromWmoCode(code, isDay: true),
+          precipitationProbability: precipProb,
+          precipitationSum: precipSum,
+          uvIndexMax: uvMax,
+          sunrise: sunrise,
+          sunset: sunset,
+        ),
+      );
     }
 
     if (minWeek > maxWeek) {

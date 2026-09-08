@@ -1,5 +1,7 @@
 import 'dart:convert';
+
 import 'package:http/http.dart' as http;
+
 import '../models/location_model.dart';
 
 class GeocodingService {
@@ -7,24 +9,26 @@ class GeocodingService {
 
   GeocodingService({http.Client? client}) : _client = client ?? http.Client();
 
-  static const String _baseUrl = 'https://geocoding-api.open-meteo.com/v1/search';
+  static const String _baseUrl =
+      'https://geocoding-api.open-meteo.com/v1/search';
 
   Future<List<LocationModel>> searchLocations(String query) async {
     final trimmed = query.trim();
     if (trimmed.isEmpty) return [];
 
-    final uri = Uri.parse(_baseUrl).replace(queryParameters: {
-      'name': trimmed,
-      'count': '10',
-      'language': 'en',
-      'format': 'json',
-    });
+    final uri = Uri.parse(_baseUrl).replace(
+      queryParameters: {
+        'name': trimmed,
+        'count': '10',
+        'language': 'en',
+        'format': 'json',
+      },
+    );
 
     try {
-      final response = await _client.get(
-        uri,
-        headers: {'Accept': 'application/json'},
-      ).timeout(const Duration(seconds: 10));
+      final response = await _client
+          .get(uri, headers: {'Accept': 'application/json'})
+          .timeout(const Duration(seconds: 10));
 
       if (response.statusCode == 200) {
         final data = jsonDecode(response.body) as Map<String, dynamic>;

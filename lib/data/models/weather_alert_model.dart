@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import 'air_quality_model.dart';
 import 'weather_model.dart';
 
@@ -83,7 +84,8 @@ class WeatherAlertModel {
           id: 'high_wind_advisory',
           title: 'High Wind Advisory',
           severity: AlertSeverity.advisory,
-          description: 'Sustained strong winds and gusts reaching ${current.windSpeed.round()} km/h may blow unsecured objects.',
+          description:
+              'Sustained strong winds and gusts reaching ${current.windSpeed.round()} km/h may blow unsecured objects.',
           instructions: 'Secure lightweight outdoor furniture. Drive with caution, especially high-profile vehicles.',
           source: 'National Weather Service',
           effectiveTime: now,
@@ -111,7 +113,8 @@ class WeatherAlertModel {
       alerts.add(
         WeatherAlertModel(
           id: 'extreme_uv_alert',
-          title: 'Extreme UV Index Alert (${current.uvIndex.toStringAsFixed(1)})',
+          title:
+              'Extreme UV Index Alert (${current.uvIndex.toStringAsFixed(1)})',
           severity: AlertSeverity.advisory,
           description: 'Very high solar radiation levels present rapid risk of skin and eye damage.',
           instructions: 'Wear SPF 30+ sunscreen, UV-blocking sunglasses, and wide-brim hats. Seek shade during midday peak hours.',

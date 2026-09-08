@@ -1,16 +1,14 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+
 import '../../../data/models/weather_model.dart';
 import '../../core/app_theme.dart';
 
 class SunArcCard extends StatelessWidget {
   final DailyForecast? todayForecast;
 
-  const SunArcCard({
-    super.key,
-    required this.todayForecast,
-  });
+  const SunArcCard({super.key, required this.todayForecast});
 
   @override
   Widget build(BuildContext context) {
@@ -20,8 +18,12 @@ class SunArcCard extends StatelessWidget {
     final sunset = todayForecast!.sunset;
     final now = DateTime.now();
 
-    final sunriseStr = sunrise != null ? DateFormat('h:mm a').format(sunrise) : '6:00 AM';
-    final sunsetStr = sunset != null ? DateFormat('h:mm a').format(sunset) : '7:30 PM';
+    final sunriseStr = sunrise != null
+        ? DateFormat('h:mm a').format(sunrise)
+        : '6:00 AM';
+    final sunsetStr = sunset != null
+        ? DateFormat('h:mm a').format(sunset)
+        : '7:30 PM';
 
     double progress = 0.5;
     String status = 'Daylight';
@@ -33,14 +35,17 @@ class SunArcCard extends StatelessWidget {
       if (now.isBefore(sunrise)) {
         progress = 0.0;
         final untilSunrise = sunrise.difference(now);
-        status = 'Sunrise in ${untilSunrise.inHours}h ${untilSunrise.inMinutes % 60}m';
+        status =
+            'Sunrise in ${untilSunrise.inHours}h ${untilSunrise.inMinutes % 60}m';
       } else if (now.isAfter(sunset)) {
         progress = 1.0;
         status = 'Sunset passed';
       } else {
-        progress = (passedMinutes / (totalDayMinutes > 0 ? totalDayMinutes : 1)).clamp(0.0, 1.0);
+        progress = (passedMinutes / (totalDayMinutes > 0 ? totalDayMinutes : 1))
+            .clamp(0.0, 1.0);
         final untilSunset = sunset.difference(now);
-        status = 'Sunset in ${untilSunset.inHours}h ${untilSunset.inMinutes % 60}m';
+        status =
+            'Sunset in ${untilSunset.inHours}h ${untilSunset.inMinutes % 60}m';
       }
     }
 
@@ -91,7 +96,10 @@ class SunArcCard extends StatelessWidget {
                 children: [
                   Text(
                     'Sunrise',
-                    style: TextStyle(color: Colors.white.withValues(alpha: 0.6), fontSize: 12),
+                    style: TextStyle(
+                      color: Colors.white.withValues(alpha: 0.6),
+                      fontSize: 12,
+                    ),
                   ),
                   Text(
                     sunriseStr,
@@ -104,7 +112,10 @@ class SunArcCard extends StatelessWidget {
                 ],
               ),
               Container(
-                padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 12,
+                  vertical: 6,
+                ),
                 decoration: BoxDecoration(
                   color: Colors.white.withValues(alpha: 0.12),
                   borderRadius: BorderRadius.circular(12),
@@ -123,7 +134,10 @@ class SunArcCard extends StatelessWidget {
                 children: [
                   Text(
                     'Sunset',
-                    style: TextStyle(color: Colors.white.withValues(alpha: 0.6), fontSize: 12),
+                    style: TextStyle(
+                      color: Colors.white.withValues(alpha: 0.6),
+                      fontSize: 12,
+                    ),
                   ),
                   Text(
                     sunsetStr,
@@ -158,7 +172,11 @@ class _SunArcPainter extends CustomPainter {
     final horizonPaint = Paint()
       ..color = Colors.white.withValues(alpha: 0.15)
       ..strokeWidth = 1.0;
-    canvas.drawLine(Offset(0, size.height - 10), Offset(size.width, size.height - 10), horizonPaint);
+    canvas.drawLine(
+      Offset(0, size.height - 10),
+      Offset(size.width, size.height - 10),
+      horizonPaint,
+    );
 
     // 2. Dashed or solid background arc
     final arcPath = Path()
@@ -174,8 +192,14 @@ class _SunArcPainter extends CustomPainter {
 
     // 3. Compute current sun position along bezier curve
     final t = progress;
-    final x = (1 - t) * (1 - t) * start.dx + 2 * (1 - t) * t * control.dx + t * t * end.dx;
-    final y = (1 - t) * (1 - t) * start.dy + 2 * (1 - t) * t * control.dy + t * t * end.dy;
+    final x =
+        (1 - t) * (1 - t) * start.dx +
+        2 * (1 - t) * t * control.dx +
+        t * t * end.dx;
+    final y =
+        (1 - t) * (1 - t) * start.dy +
+        2 * (1 - t) * t * control.dy +
+        t * t * end.dy;
     final sunCenter = Offset(x, y);
 
     // Sun Glow

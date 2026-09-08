@@ -1,5 +1,7 @@
 import 'dart:math' as math;
+
 import 'package:flutter/material.dart';
+
 import '../../data/models/weather_model.dart';
 
 class WeatherAtmosphereEffect extends StatefulWidget {
@@ -13,7 +15,8 @@ class WeatherAtmosphereEffect extends StatefulWidget {
   });
 
   @override
-  State<WeatherAtmosphereEffect> createState() => _WeatherAtmosphereEffectState();
+  State<WeatherAtmosphereEffect> createState() =>
+      _WeatherAtmosphereEffectState();
 }
 
 class _WeatherAtmosphereEffectState extends State<WeatherAtmosphereEffect>
@@ -45,14 +48,16 @@ class _WeatherAtmosphereEffectState extends State<WeatherAtmosphereEffect>
     _particles.clear();
     final count = _getParticleCount(widget.themeType);
     for (int i = 0; i < count; i++) {
-      _particles.add(_Particle(
-        x: _random.nextDouble(),
-        y: _random.nextDouble(),
-        speed: 0.2 + _random.nextDouble() * 0.8,
-        size: 1.0 + _random.nextDouble() * 3.5,
-        opacity: 0.2 + _random.nextDouble() * 0.8,
-        phase: _random.nextDouble() * 2 * math.pi,
-      ));
+      _particles.add(
+        _Particle(
+          x: _random.nextDouble(),
+          y: _random.nextDouble(),
+          speed: 0.2 + _random.nextDouble() * 0.8,
+          size: 1.0 + _random.nextDouble() * 3.5,
+          opacity: 0.2 + _random.nextDouble() * 0.8,
+          phase: _random.nextDouble() * 2 * math.pi,
+        ),
+      );
     }
   }
 
@@ -180,8 +185,12 @@ class _AtmospherePainter extends CustomPainter {
     final flashCycle = (progress * 5) % 1.0;
     if (flashCycle > 0.94) {
       final flashIntensity = (flashCycle - 0.94) / 0.06;
-      final flashAlpha = (math.sin(flashIntensity * math.pi) * 0.35).clamp(0.0, 0.4);
-      final flashPaint = Paint()..color = const Color(0xFFE0E5FF).withValues(alpha: flashAlpha);
+      final flashAlpha = (math.sin(flashIntensity * math.pi) * 0.35).clamp(
+        0.0,
+        0.4,
+      );
+      final flashPaint = Paint()
+        ..color = const Color(0xFFE0E5FF).withValues(alpha: flashAlpha);
       canvas.drawRect(Rect.fromLTWH(0, 0, size.width, size.height), flashPaint);
     }
   }
@@ -205,7 +214,8 @@ class _AtmospherePainter extends CustomPainter {
 
     for (final p in particles) {
       final xOffset = p.x * size.width;
-      final yOffset = p.y * (size.height * 0.65); // Keep stars mostly in upper sky
+      final yOffset =
+          p.y * (size.height * 0.65); // Keep stars mostly in upper sky
 
       // Twinkle effect
       final twinkle = (math.sin(progress * 4 * math.pi + p.phase) + 1.0) / 2.0;
@@ -216,7 +226,8 @@ class _AtmospherePainter extends CustomPainter {
 
       // Subtle star glow for larger stars
       if (p.size > 2.5) {
-        paint.color = const Color(0xFFB0C4DE).withValues(alpha: starOpacity * 0.3);
+        paint.color = const Color(0xFFB0C4DE)
+            .withValues(alpha: starOpacity * 0.3);
         canvas.drawCircle(Offset(xOffset, yOffset), p.size * 2.0, paint);
       }
     }
@@ -243,8 +254,14 @@ class _AtmospherePainter extends CustomPainter {
     final motePaint = Paint()..style = PaintingStyle.fill;
     for (final p in particles) {
       final yOffset = ((p.y - progress * 0.08 * p.speed) % 1.0) * size.height;
-      final xOffset = ((p.x + math.sin(progress * math.pi + p.phase) * 0.04) % 1.0) * size.width;
-      final moteOpacity = (0.2 + 0.3 * math.sin(progress * 2 * math.pi + p.phase)).clamp(0.0, 0.4);
+      final xOffset =
+          ((p.x + math.sin(progress * math.pi + p.phase) * 0.04) % 1.0) *
+          size.width;
+      final moteOpacity =
+          (0.2 + 0.3 * math.sin(progress * 2 * math.pi + p.phase)).clamp(
+            0.0,
+            0.4,
+          );
 
       motePaint.color = const Color(0xFFFFF9C4).withValues(alpha: moteOpacity);
       canvas.drawCircle(Offset(xOffset, yOffset), p.size * 0.9, motePaint);

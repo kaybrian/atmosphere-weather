@@ -1,15 +1,14 @@
 import 'dart:ui';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+
 import '../../../data/models/weather_alert_model.dart';
 
 class SevereAlertBanner extends StatelessWidget {
   final List<WeatherAlertModel> alerts;
 
-  const SevereAlertBanner({
-    super.key,
-    required this.alerts,
-  });
+  const SevereAlertBanner({super.key, required this.alerts});
 
   @override
   Widget build(BuildContext context) {
@@ -52,11 +51,7 @@ class SevereAlertBanner extends StatelessWidget {
                   color: color.withValues(alpha: 0.25),
                   shape: BoxShape.circle,
                 ),
-                child: Icon(
-                  primaryAlert.severity.icon,
-                  color: color,
-                  size: 22,
-                ),
+                child: Icon(primaryAlert.severity.icon, color: color, size: 22),
               ),
               const SizedBox(width: 12),
               Expanded(
@@ -66,7 +61,10 @@ class SevereAlertBanner extends StatelessWidget {
                     Row(
                       children: [
                         Container(
-                          padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 6,
+                            vertical: 2,
+                          ),
                           decoration: BoxDecoration(
                             color: color,
                             borderRadius: BorderRadius.circular(6),
@@ -121,7 +119,10 @@ class SevereAlertBanner extends StatelessWidget {
     );
   }
 
-  void _showAlertDetailModal(BuildContext context, List<WeatherAlertModel> alerts) {
+  void _showAlertDetailModal(
+    BuildContext context,
+    List<WeatherAlertModel> alerts,
+  ) {
     showModalBottomSheet(
       context: context,
       isScrollControlled: true,
@@ -135,7 +136,9 @@ class SevereAlertBanner extends StatelessWidget {
               padding: const EdgeInsets.all(24),
               decoration: BoxDecoration(
                 color: const Color(0xFF161C2C).withValues(alpha: 0.95),
-                borderRadius: const BorderRadius.vertical(top: Radius.circular(28)),
+                borderRadius: const BorderRadius.vertical(
+                  top: Radius.circular(28),
+                ),
                 border: Border.all(color: Colors.white.withValues(alpha: 0.15)),
               ),
               child: Column(
@@ -165,7 +168,10 @@ class SevereAlertBanner extends StatelessWidget {
                         ),
                       ),
                       IconButton(
-                        icon: const Icon(CupertinoIcons.xmark_circle_fill, color: Colors.white54),
+                        icon: const Icon(
+                          CupertinoIcons.xmark_circle_fill,
+                          color: Colors.white54,
+                        ),
                         onPressed: () => Navigator.pop(context),
                       ),
                     ],
@@ -179,14 +185,20 @@ class SevereAlertBanner extends StatelessWidget {
                       decoration: BoxDecoration(
                         color: alertColor.withValues(alpha: 0.1),
                         borderRadius: BorderRadius.circular(16),
-                        border: Border.all(color: alertColor.withValues(alpha: 0.4)),
+                        border: Border.all(
+                          color: alertColor.withValues(alpha: 0.4),
+                        ),
                       ),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Row(
                             children: [
-                              Icon(alert.severity.icon, color: alertColor, size: 20),
+                              Icon(
+                                alert.severity.icon,
+                                color: alertColor,
+                                size: 20,
+                              ),
                               const SizedBox(width: 8),
                               Expanded(
                                 child: Text(
@@ -219,11 +231,16 @@ class SevereAlertBanner extends StatelessWidget {
                             child: Row(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                const Icon(Icons.shield_outlined, color: Color(0xFF64B5F6), size: 18),
+                                const Icon(
+                                  Icons.shield_outlined,
+                                  color: Color(0xFF64B5F6),
+                                  size: 18,
+                                ),
                                 const SizedBox(width: 8),
                                 Expanded(
                                   child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
                                     children: [
                                       const Text(
                                         'Recommended Action',
@@ -237,7 +254,9 @@ class SevereAlertBanner extends StatelessWidget {
                                       Text(
                                         alert.instructions,
                                         style: TextStyle(
-                                          color: Colors.white.withValues(alpha: 0.9),
+                                          color: Colors.white.withValues(
+                                            alpha: 0.9,
+                                          ),
                                           fontSize: 13,
                                           height: 1.3,
                                         ),

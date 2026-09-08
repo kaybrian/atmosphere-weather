@@ -17,10 +17,10 @@ class WeatherRepository {
     LocationService? locationService,
     GeocodingService? geocodingService,
     StorageService? storageService,
-  })  : _apiService = apiService ?? WeatherApiService(),
-        _locationService = locationService ?? LocationService(),
-        _geocodingService = geocodingService ?? GeocodingService(),
-        _storageService = storageService ?? StorageService();
+  }) : _apiService = apiService ?? WeatherApiService(),
+       _locationService = locationService ?? LocationService(),
+       _geocodingService = geocodingService ?? GeocodingService(),
+       _storageService = storageService ?? StorageService();
 
   Future<LocationModel> getCurrentLocation() async {
     return _locationService.getCurrentLocation();
@@ -30,8 +30,14 @@ class WeatherRepository {
     return _apiService.fetchWeather(latitude: latitude, longitude: longitude);
   }
 
-  Future<AirQualityData> getAirQuality(double latitude, double longitude) async {
-    return _apiService.fetchAirQuality(latitude: latitude, longitude: longitude);
+  Future<AirQualityData> getAirQuality(
+    double latitude,
+    double longitude,
+  ) async {
+    return _apiService.fetchAirQuality(
+      latitude: latitude,
+      longitude: longitude,
+    );
   }
 
   Future<List<LocationModel>> searchCities(String query) async {

@@ -1,7 +1,9 @@
 import 'dart:convert';
+
 import 'package:flutter/foundation.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:http/http.dart' as http;
+
 import '../models/location_model.dart';
 
 class LocationService {
@@ -18,7 +20,9 @@ class LocationService {
         return gpsLocation;
       }
     } catch (e) {
-      debugPrint('GPS location attempt failed: $e. Falling back to IP location.');
+      debugPrint(
+        'GPS location attempt failed: $e. Falling back to IP location.',
+      );
     }
 
     try {
@@ -69,7 +73,10 @@ class LocationService {
     );
 
     // Attempt reverse geocode to get city name
-    final resolvedName = await _reverseGeocode(position.latitude, position.longitude);
+    final resolvedName = await _reverseGeocode(
+      position.latitude,
+      position.longitude,
+    );
 
     return LocationModel(
       name: resolvedName?.name ?? 'My Location',
@@ -87,10 +94,13 @@ class LocationService {
       final uri = Uri.parse(
         'https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=$lat&longitude=$lon&localityLanguage=en',
       );
-      final response = await _client.get(uri).timeout(const Duration(seconds: 6));
+      final response = await _client
+          .get(uri)
+          .timeout(const Duration(seconds: 6));
       if (response.statusCode == 200) {
         final data = jsonDecode(response.body) as Map<String, dynamic>;
-        final city = data['city'] as String? ??
+        final city =
+            data['city'] as String? ??
             data['locality'] as String? ??
             data['principalSubdivision'] as String? ??
             'Current Location';
@@ -116,7 +126,9 @@ class LocationService {
     // Try ipapi.co
     try {
       final uri = Uri.parse('https://ipapi.co/json/');
-      final response = await _client.get(uri).timeout(const Duration(seconds: 6));
+      final response = await _client
+          .get(uri)
+          .timeout(const Duration(seconds: 6));
       if (response.statusCode == 200) {
         final data = jsonDecode(response.body) as Map<String, dynamic>;
         if (data['latitude'] != null && data['longitude'] != null) {
@@ -136,7 +148,9 @@ class LocationService {
     // Fallback IP provider: freeipapi.com
     try {
       final uri = Uri.parse('https://freeipapi.com/api/json');
-      final response = await _client.get(uri).timeout(const Duration(seconds: 6));
+      final response = await _client
+          .get(uri)
+          .timeout(const Duration(seconds: 6));
       if (response.statusCode == 200) {
         final data = jsonDecode(response.body) as Map<String, dynamic>;
         if (data['latitude'] != null && data['longitude'] != null) {

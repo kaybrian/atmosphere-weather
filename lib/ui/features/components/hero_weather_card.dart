@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+
 import '../../../data/models/location_model.dart';
 import '../../../data/models/weather_model.dart';
 import '../../core/app_theme.dart';
@@ -36,15 +37,22 @@ class HeroWeatherCard extends StatelessWidget {
             decoration: BoxDecoration(
               color: Colors.black.withValues(alpha: 0.2),
               borderRadius: BorderRadius.circular(30),
-              border: Border.all(color: Colors.white.withValues(alpha: 0.2), width: 1),
+              border: Border.all(
+                color: Colors.white.withValues(alpha: 0.2),
+                width: 1,
+              ),
             ),
             child: Row(
               mainAxisSize: MainAxisSize.min,
               children: [
                 Icon(
-                  location.isCurrentLocation ? CupertinoIcons.location_fill : CupertinoIcons.placemark_fill,
+                  location.isCurrentLocation
+                      ? CupertinoIcons.location_fill
+                      : CupertinoIcons.placemark_fill,
                   size: 16,
-                  color: location.isCurrentLocation ? const Color(0xFF64B5F6) : Colors.white70,
+                  color: location.isCurrentLocation
+                      ? const Color(0xFF64B5F6)
+                      : Colors.white70,
                 ),
                 const SizedBox(width: 8),
                 Text(
@@ -56,10 +64,14 @@ class HeroWeatherCard extends StatelessWidget {
                     letterSpacing: 0.3,
                   ),
                 ),
-                if (location.countryCode != null && location.countryCode!.isNotEmpty) ...[
+                if (location.countryCode != null &&
+                    location.countryCode!.isNotEmpty) ...[
                   const SizedBox(width: 6),
                   Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 6,
+                      vertical: 2,
+                    ),
                     decoration: BoxDecoration(
                       color: Colors.white.withValues(alpha: 0.15),
                       borderRadius: BorderRadius.circular(6),
@@ -75,7 +87,11 @@ class HeroWeatherCard extends StatelessWidget {
                   ),
                 ],
                 const SizedBox(width: 6),
-                const Icon(CupertinoIcons.chevron_down, size: 14, color: Colors.white70),
+                const Icon(
+                  CupertinoIcons.chevron_down,
+                  size: 14,
+                  color: Colors.white70,
+                ),
               ],
             ),
           ),
@@ -170,11 +186,7 @@ class HeroWeatherCard extends StatelessWidget {
           child: Row(
             mainAxisSize: MainAxisSize.min,
             children: [
-              Icon(
-                current.condition.icon,
-                color: accent,
-                size: 20,
-              ),
+              Icon(current.condition.icon, color: accent, size: 20),
               const SizedBox(width: 8),
               Text(
                 current.condition.description,

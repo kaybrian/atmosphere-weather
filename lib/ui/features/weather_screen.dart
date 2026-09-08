@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+
 import '../../data/models/location_model.dart';
 import '../core/app_theme.dart';
 import '../core/weather_effects.dart';
@@ -18,10 +19,7 @@ import 'components/weather_radar_card.dart';
 class WeatherScreen extends StatefulWidget {
   final WeatherViewModel viewModel;
 
-  const WeatherScreen({
-    super.key,
-    required this.viewModel,
-  });
+  const WeatherScreen({super.key, required this.viewModel});
 
   @override
   State<WeatherScreen> createState() => _WeatherScreenState();
@@ -61,10 +59,10 @@ class _WeatherScreenState extends State<WeatherScreen> {
                 child: vm.isLoading && weather == null
                     ? _buildLoadingView()
                     : vm.errorMessage != null && weather == null
-                        ? _buildErrorView(vm)
-                        : weather != null && location != null
-                            ? _buildWeatherContent(vm, weather, location, isFahrenheit)
-                            : const SizedBox.shrink(),
+                    ? _buildErrorView(vm)
+                    : weather != null && location != null
+                    ? _buildWeatherContent(vm, weather, location, isFahrenheit)
+                    : const SizedBox.shrink(),
               ),
             ],
           ),
@@ -83,10 +81,7 @@ class _WeatherScreenState extends State<WeatherScreen> {
               ),
             ),
             child: vm.particlesEnabled
-                ? WeatherAtmosphereEffect(
-                    themeType: themeType,
-                    child: content,
-                  )
+                ? WeatherAtmosphereEffect(themeType: themeType, child: content)
                 : content,
           ),
         );
@@ -94,7 +89,11 @@ class _WeatherScreenState extends State<WeatherScreen> {
     );
   }
 
-  Widget _buildTopBar(BuildContext context, WeatherViewModel vm, LocationModel? location) {
+  Widget _buildTopBar(
+    BuildContext context,
+    WeatherViewModel vm,
+    LocationModel? location,
+  ) {
     final isFavorite = location != null && vm.isLocationFavorite(location);
 
     return Padding(
@@ -112,7 +111,9 @@ class _WeatherScreenState extends State<WeatherScreen> {
               vm.isCurrentSelected
                   ? CupertinoIcons.location_fill
                   : CupertinoIcons.location,
-              color: vm.isCurrentSelected ? const Color(0xFF64B5F6) : Colors.white,
+              color: vm.isCurrentSelected
+                  ? const Color(0xFF64B5F6)
+                  : Colors.white,
               size: 20,
             ),
             tooltip: 'My Live Location',
@@ -133,13 +134,22 @@ class _WeatherScreenState extends State<WeatherScreen> {
                       Padding(
                         padding: const EdgeInsets.only(right: 6),
                         child: ChoiceChip(
-                          avatar: const Icon(CupertinoIcons.location_fill, size: 12, color: Colors.white),
+                          avatar: const Icon(
+                            CupertinoIcons.location_fill,
+                            size: 12,
+                            color: Colors.white,
+                          ),
                           label: const Text('Local'),
                           selected: vm.isCurrentSelected,
                           selectedColor: Colors.white.withValues(alpha: 0.3),
                           backgroundColor: Colors.white.withValues(alpha: 0.08),
-                          labelStyle: const TextStyle(color: Colors.white, fontSize: 12),
-                          side: BorderSide(color: Colors.white.withValues(alpha: 0.2)),
+                          labelStyle: const TextStyle(
+                            color: Colors.white,
+                            fontSize: 12,
+                          ),
+                          side: BorderSide(
+                            color: Colors.white.withValues(alpha: 0.2),
+                          ),
                           onSelected: (_) => vm.switchToCurrentLocation(),
                         ),
                       ),
@@ -155,9 +165,13 @@ class _WeatherScreenState extends State<WeatherScreen> {
                           labelStyle: TextStyle(
                             color: Colors.white,
                             fontSize: 12,
-                            fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
+                            fontWeight: isSelected
+                                ? FontWeight.bold
+                                : FontWeight.normal,
                           ),
-                          side: BorderSide(color: Colors.white.withValues(alpha: 0.2)),
+                          side: BorderSide(
+                            color: Colors.white.withValues(alpha: 0.2),
+                          ),
                           onSelected: (_) => vm.selectLocation(fav),
                         ),
                       );
@@ -177,13 +191,18 @@ class _WeatherScreenState extends State<WeatherScreen> {
                 IconButton(
                   visualDensity: VisualDensity.compact,
                   padding: EdgeInsets.zero,
-                  constraints: const BoxConstraints(minWidth: 34, minHeight: 34),
+                  constraints: const BoxConstraints(
+                    minWidth: 34,
+                    minHeight: 34,
+                  ),
                   style: IconButton.styleFrom(
                     backgroundColor: Colors.white.withValues(alpha: 0.12),
                     shape: const CircleBorder(),
                   ),
                   icon: Icon(
-                    isFavorite ? CupertinoIcons.heart_fill : CupertinoIcons.heart,
+                    isFavorite
+                        ? CupertinoIcons.heart_fill
+                        : CupertinoIcons.heart,
                     color: isFavorite ? const Color(0xFFFF5252) : Colors.white,
                     size: 17,
                   ),
@@ -196,11 +215,16 @@ class _WeatherScreenState extends State<WeatherScreen> {
               GestureDetector(
                 onTap: () => vm.toggleUnit(),
                 child: Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 5),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 8,
+                    vertical: 5,
+                  ),
                   decoration: BoxDecoration(
                     color: Colors.white.withValues(alpha: 0.15),
                     borderRadius: BorderRadius.circular(14),
-                    border: Border.all(color: Colors.white.withValues(alpha: 0.2)),
+                    border: Border.all(
+                      color: Colors.white.withValues(alpha: 0.2),
+                    ),
                   ),
                   child: Text(
                     vm.useFahrenheit ? '°F' : '°C',
@@ -223,7 +247,11 @@ class _WeatherScreenState extends State<WeatherScreen> {
                   backgroundColor: Colors.white.withValues(alpha: 0.12),
                   shape: const CircleBorder(),
                 ),
-                icon: const Icon(CupertinoIcons.search, color: Colors.white, size: 18),
+                icon: const Icon(
+                  CupertinoIcons.search,
+                  color: Colors.white,
+                  size: 18,
+                ),
                 tooltip: 'Search Cities',
                 onPressed: () => CitySearchSheet.show(context, vm),
               ),
@@ -238,7 +266,11 @@ class _WeatherScreenState extends State<WeatherScreen> {
                   backgroundColor: Colors.white.withValues(alpha: 0.12),
                   shape: const CircleBorder(),
                 ),
-                icon: const Icon(CupertinoIcons.gear_alt, color: Colors.white, size: 18),
+                icon: const Icon(
+                  CupertinoIcons.gear_alt,
+                  color: Colors.white,
+                  size: 18,
+                ),
                 tooltip: 'Preferences',
                 onPressed: () => AppSettingsSheet.show(context, vm),
               ),
@@ -260,7 +292,9 @@ class _WeatherScreenState extends State<WeatherScreen> {
       color: Colors.white,
       backgroundColor: const Color(0xFF1976D2),
       child: CustomScrollView(
-        physics: const BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
+        physics: const BouncingScrollPhysics(
+          parent: AlwaysScrollableScrollPhysics(),
+        ),
         slivers: [
           SliverToBoxAdapter(
             child: Column(
@@ -306,9 +340,7 @@ class _WeatherScreenState extends State<WeatherScreen> {
                 const SizedBox(height: 16),
 
                 // 5. Air Quality Index Card
-                AirQualityCard(
-                  airQuality: vm.airQuality,
-                ),
+                AirQualityCard(airQuality: vm.airQuality),
 
                 const SizedBox(height: 16),
 
@@ -323,7 +355,9 @@ class _WeatherScreenState extends State<WeatherScreen> {
 
                 // 7. Sun Arc & Celestial Progression
                 SunArcCard(
-                  todayForecast: weather.daily.isNotEmpty ? weather.daily.first : null,
+                  todayForecast: weather.daily.isNotEmpty
+                      ? weather.daily.first
+                      : null,
                 ),
 
                 const SizedBox(height: 24),
@@ -336,7 +370,11 @@ class _WeatherScreenState extends State<WeatherScreen> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Icon(CupertinoIcons.cloud_sun, size: 14, color: Colors.white.withValues(alpha: 0.4)),
+                          Icon(
+                            CupertinoIcons.cloud_sun,
+                            size: 14,
+                            color: Colors.white.withValues(alpha: 0.4),
+                          ),
                           const SizedBox(width: 6),
                           Text(
                             'Open-Meteo Weather & Air Quality API',
@@ -378,7 +416,10 @@ class _WeatherScreenState extends State<WeatherScreen> {
               shape: BoxShape.circle,
               border: Border.all(color: Colors.white.withValues(alpha: 0.2)),
             ),
-            child: const CupertinoActivityIndicator(color: Colors.white, radius: 18),
+            child: const CupertinoActivityIndicator(
+              color: Colors.white,
+              radius: 18,
+            ),
           ),
           const SizedBox(height: 20),
           const Text(
@@ -416,29 +457,48 @@ class _WeatherScreenState extends State<WeatherScreen> {
                 color: Colors.white.withValues(alpha: 0.1),
                 shape: BoxShape.circle,
               ),
-              child: const Icon(CupertinoIcons.wifi_exclamationmark, color: Colors.white, size: 40),
+              child: const Icon(
+                CupertinoIcons.wifi_exclamationmark,
+                color: Colors.white,
+                size: 40,
+              ),
             ),
             const SizedBox(height: 20),
             const Text(
               'Weather Unavailable',
-              style: TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold),
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+              ),
             ),
             const SizedBox(height: 8),
             Text(
               vm.errorMessage ?? 'Unable to fetch weather data at this moment.',
               textAlign: TextAlign.center,
-              style: TextStyle(color: Colors.white.withValues(alpha: 0.7), fontSize: 14),
+              style: TextStyle(
+                color: Colors.white.withValues(alpha: 0.7),
+                fontSize: 14,
+              ),
             ),
             const SizedBox(height: 24),
             ElevatedButton.icon(
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.white,
                 foregroundColor: const Color(0xFF0D47A1),
-                padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
-                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 24,
+                  vertical: 12,
+                ),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(24),
+                ),
               ),
               icon: const Icon(CupertinoIcons.refresh),
-              label: const Text('Try Again', style: TextStyle(fontWeight: FontWeight.bold)),
+              label: const Text(
+                'Try Again',
+                style: TextStyle(fontWeight: FontWeight.bold),
+              ),
               onPressed: () => vm.init(),
             ),
           ],

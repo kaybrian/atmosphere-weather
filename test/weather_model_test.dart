@@ -105,7 +105,7 @@ void main() {
           'pm10': 15.4,
           'nitrogen_dioxide': 12.0,
           'ozone': 48.0,
-        }
+        },
       };
       final goodAqi = AirQualityData.fromJson(goodJson);
       expect(goodAqi.usAqi, 35);
@@ -181,7 +181,10 @@ void main() {
       );
 
       const badAqi = AirQualityData(usAqi: 175);
-      final alerts = WeatherAlertModel.evaluateAlerts(current: current, airQuality: badAqi);
+      final alerts = WeatherAlertModel.evaluateAlerts(
+        current: current,
+        airQuality: badAqi,
+      );
       expect(alerts.any((a) => a.id == 'aqi_health_alert'), isTrue);
     });
   });

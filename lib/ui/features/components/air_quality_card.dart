@@ -1,15 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+
 import '../../../data/models/air_quality_model.dart';
 import '../../core/app_theme.dart';
 
 class AirQualityCard extends StatelessWidget {
   final AirQualityData? airQuality;
 
-  const AirQualityCard({
-    super.key,
-    required this.airQuality,
-  });
+  const AirQualityCard({super.key, required this.airQuality});
 
   @override
   Widget build(BuildContext context) {
@@ -48,7 +46,10 @@ class AirQualityCard extends StatelessWidget {
                 ],
               ),
               Container(
-                padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 10,
+                  vertical: 4,
+                ),
                 decoration: BoxDecoration(
                   color: color.withValues(alpha: 0.2),
                   borderRadius: BorderRadius.circular(12),
@@ -60,7 +61,10 @@ class AirQualityCard extends StatelessWidget {
                     Container(
                       width: 6,
                       height: 6,
-                      decoration: BoxDecoration(color: color, shape: BoxShape.circle),
+                      decoration: BoxDecoration(
+                        color: color,
+                        shape: BoxShape.circle,
+                      ),
                     ),
                     const SizedBox(width: 6),
                     Text(
@@ -171,10 +175,24 @@ class AirQualityCard extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              _buildPollutantChip('PM2.5', aqi.pm2_5 != null ? '${aqi.pm2_5!.round()} µg/m³' : '--'),
-              _buildPollutantChip('PM10', aqi.pm10 != null ? '${aqi.pm10!.round()} µg/m³' : '--'),
-              _buildPollutantChip('NO₂', aqi.nitrogenDioxide != null ? '${aqi.nitrogenDioxide!.round()} µg/m³' : '--'),
-              _buildPollutantChip('O₃', aqi.ozone != null ? '${aqi.ozone!.round()} µg/m³' : '--'),
+              _buildPollutantChip(
+                'PM2.5',
+                aqi.pm2_5 != null ? '${aqi.pm2_5!.round()} µg/m³' : '--',
+              ),
+              _buildPollutantChip(
+                'PM10',
+                aqi.pm10 != null ? '${aqi.pm10!.round()} µg/m³' : '--',
+              ),
+              _buildPollutantChip(
+                'NO₂',
+                aqi.nitrogenDioxide != null
+                    ? '${aqi.nitrogenDioxide!.round()} µg/m³'
+                    : '--',
+              ),
+              _buildPollutantChip(
+                'O₃',
+                aqi.ozone != null ? '${aqi.ozone!.round()} µg/m³' : '--',
+              ),
             ],
           ),
         ],

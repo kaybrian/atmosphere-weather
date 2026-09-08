@@ -1,5 +1,7 @@
 import 'dart:convert';
+
 import 'package:shared_preferences/shared_preferences.dart';
+
 import '../models/location_model.dart';
 
 class StorageService {
@@ -23,7 +25,10 @@ class StorageService {
     }
     try {
       return jsonList
-          .map((str) => LocationModel.fromJson(jsonDecode(str) as Map<String, dynamic>))
+          .map(
+            (str) =>
+                LocationModel.fromJson(jsonDecode(str) as Map<String, dynamic>),
+          )
           .toList();
     } catch (_) {
       return [];
@@ -40,7 +45,9 @@ class StorageService {
     final jsonStr = prefs.getString(_keyLastLocation);
     if (jsonStr == null) return null;
     try {
-      return LocationModel.fromJson(jsonDecode(jsonStr) as Map<String, dynamic>);
+      return LocationModel.fromJson(
+        jsonDecode(jsonStr) as Map<String, dynamic>,
+      );
     } catch (_) {
       return null;
     }

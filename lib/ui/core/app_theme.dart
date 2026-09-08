@@ -1,6 +1,8 @@
 import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+
 import '../../data/models/weather_model.dart';
 
 class AppTheme {
@@ -163,7 +165,9 @@ class AppTheme {
 
   static String formatDayOfWeek(DateTime date) {
     final now = DateTime.now();
-    if (date.year == now.year && date.month == now.month && date.day == now.day) {
+    if (date.year == now.year &&
+        date.month == now.month &&
+        date.day == now.day) {
       return 'Today';
     }
     return DateFormat('EEE').format(date);

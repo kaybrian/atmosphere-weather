@@ -1,6 +1,8 @@
 import 'dart:math' as math;
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+
 import '../../../data/models/weather_model.dart';
 import '../../core/app_theme.dart';
 
@@ -148,7 +150,9 @@ class WeatherMetricsGrid extends StatelessWidget {
           ),
         ],
       ),
-      subtitle: uv > 5 ? 'Sun protection recommended during midday' : 'Low risk from UV rays today',
+      subtitle: uv > 5
+          ? 'Sun protection recommended during midday'
+          : 'Low risk from UV rays today',
     );
   }
 
@@ -232,7 +236,9 @@ class WeatherMetricsGrid extends StatelessWidget {
             child: LinearProgressIndicator(
               value: (hum / 100.0).clamp(0.0, 1.0),
               backgroundColor: Colors.white.withValues(alpha: 0.1),
-              valueColor: const AlwaysStoppedAnimation<Color>(Color(0xFF4FC3F7)),
+              valueColor: const AlwaysStoppedAnimation<Color>(
+                Color(0xFF4FC3F7),
+              ),
               minHeight: 4,
             ),
           ),
@@ -241,8 +247,8 @@ class WeatherMetricsGrid extends StatelessWidget {
       subtitle: hum > 70
           ? 'Air feels quite humid'
           : hum < 35
-              ? 'Air feels rather dry'
-              : 'Comfortable moisture levels',
+          ? 'Air feels rather dry'
+          : 'Comfortable moisture levels',
     );
   }
 
@@ -250,7 +256,9 @@ class WeatherMetricsGrid extends StatelessWidget {
     final diff = current.apparentTemperature - current.temperature;
     String comment = 'Similar to the actual temperature';
     if (diff.abs() > 1.5) {
-      comment = diff > 0 ? 'Humidity is making it feel warmer' : 'Wind is making it feel cooler';
+      comment = diff > 0
+          ? 'Humidity is making it feel warmer'
+          : 'Wind is making it feel cooler';
     }
 
     return _buildCard(
@@ -281,7 +289,9 @@ class WeatherMetricsGrid extends StatelessWidget {
           fontWeight: FontWeight.bold,
         ),
       ),
-      subtitle: pressure > 1013 ? 'High barometric pressure' : 'Low barometric pressure',
+      subtitle: pressure > 1013
+          ? 'High barometric pressure'
+          : 'Low barometric pressure',
     );
   }
 
@@ -298,7 +308,9 @@ class WeatherMetricsGrid extends StatelessWidget {
           fontWeight: FontWeight.bold,
         ),
       ),
-      subtitle: precip > 0 ? 'Rainfall detected recently' : 'No rain reported currently',
+      subtitle: precip > 0
+          ? 'Rainfall detected recently'
+          : 'No rain reported currently',
     );
   }
 }

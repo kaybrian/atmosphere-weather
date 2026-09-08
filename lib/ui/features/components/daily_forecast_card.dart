@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+
 import '../../../data/models/weather_model.dart';
 import '../../core/app_theme.dart';
 
@@ -66,8 +67,16 @@ class DailyForecastCard extends StatelessWidget {
               final accent = AppTheme.getAccentGlow(item.condition.themeType);
 
               // Calculate start and end ratios for temperature bar
-              final startRatio = ((item.minTemperature - weekMinTemp) / totalRange).clamp(0.0, 1.0);
-              final endRatio = ((item.maxTemperature - weekMinTemp) / totalRange).clamp(0.0, 1.0);
+              final startRatio =
+                  ((item.minTemperature - weekMinTemp) / totalRange).clamp(
+                    0.0,
+                    1.0,
+                  );
+              final endRatio =
+                  ((item.maxTemperature - weekMinTemp) / totalRange).clamp(
+                    0.0,
+                    1.0,
+                  );
               final currentRatio = isToday
                   ? ((currentTemp - weekMinTemp) / totalRange).clamp(0.0, 1.0)
                   : null;
@@ -80,7 +89,9 @@ class DailyForecastCard extends StatelessWidget {
                     child: Text(
                       AppTheme.formatDayOfWeek(item.date),
                       style: TextStyle(
-                        color: isToday ? Colors.white : Colors.white.withValues(alpha: 0.85),
+                        color: isToday
+                            ? Colors.white
+                            : Colors.white.withValues(alpha: 0.85),
                         fontSize: 15,
                         fontWeight: isToday ? FontWeight.bold : FontWeight.w500,
                       ),
@@ -93,11 +104,7 @@ class DailyForecastCard extends StatelessWidget {
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        Icon(
-                          item.condition.icon,
-                          color: accent,
-                          size: 22,
-                        ),
+                        Icon(item.condition.icon, color: accent, size: 22),
                         if (item.precipitationProbability > 15)
                           Text(
                             '${item.precipitationProbability}%',
@@ -117,7 +124,10 @@ class DailyForecastCard extends StatelessWidget {
                   SizedBox(
                     width: 34,
                     child: Text(
-                      AppTheme.formatTemperature(item.minTemperature, isFahrenheit),
+                      AppTheme.formatTemperature(
+                        item.minTemperature,
+                        isFahrenheit,
+                      ),
                       textAlign: TextAlign.end,
                       style: TextStyle(
                         color: Colors.white.withValues(alpha: 0.6),
@@ -137,7 +147,8 @@ class DailyForecastCard extends StatelessWidget {
                         builder: (context, constraints) {
                           final barWidth = constraints.maxWidth;
                           final left = startRatio * barWidth;
-                          final width = ((endRatio - startRatio) * barWidth).clamp(6.0, barWidth);
+                          final width = ((endRatio - startRatio) * barWidth)
+                              .clamp(6.0, barWidth);
 
                           return Stack(
                             alignment: Alignment.centerLeft,
@@ -175,7 +186,10 @@ class DailyForecastCard extends StatelessWidget {
                               // Current Temperature Dot (for Today)
                               if (currentRatio != null)
                                 Positioned(
-                                  left: (currentRatio * barWidth - 4).clamp(0.0, barWidth - 8),
+                                  left: (currentRatio * barWidth - 4).clamp(
+                                    0.0,
+                                    barWidth - 8,
+                                  ),
                                   child: Container(
                                     width: 8,
                                     height: 8,
@@ -183,12 +197,16 @@ class DailyForecastCard extends StatelessWidget {
                                       color: Colors.white,
                                       shape: BoxShape.circle,
                                       border: Border.all(
-                                        color: Colors.black.withValues(alpha: 0.5),
+                                        color: Colors.black.withValues(
+                                          alpha: 0.5,
+                                        ),
                                         width: 1.5,
                                       ),
                                       boxShadow: [
                                         BoxShadow(
-                                          color: Colors.white.withValues(alpha: 0.8),
+                                          color: Colors.white.withValues(
+                                            alpha: 0.8,
+                                          ),
                                           blurRadius: 4,
                                         ),
                                       ],
@@ -208,7 +226,10 @@ class DailyForecastCard extends StatelessWidget {
                   SizedBox(
                     width: 34,
                     child: Text(
-                      AppTheme.formatTemperature(item.maxTemperature, isFahrenheit),
+                      AppTheme.formatTemperature(
+                        item.maxTemperature,
+                        isFahrenheit,
+                      ),
                       textAlign: TextAlign.start,
                       style: const TextStyle(
                         color: Colors.white,

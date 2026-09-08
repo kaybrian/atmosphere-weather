@@ -1,15 +1,14 @@
 import 'dart:ui';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+
 import '../../view_models/weather_view_model.dart';
 
 class AppSettingsSheet extends StatelessWidget {
   final WeatherViewModel viewModel;
 
-  const AppSettingsSheet({
-    super.key,
-    required this.viewModel,
-  });
+  const AppSettingsSheet({super.key, required this.viewModel});
 
   static Future<void> show(BuildContext context, WeatherViewModel viewModel) {
     return showModalBottomSheet(
@@ -63,7 +62,10 @@ class AppSettingsSheet extends StatelessWidget {
                     ),
                   ),
                   IconButton(
-                    icon: const Icon(CupertinoIcons.xmark_circle_fill, color: Colors.white54),
+                    icon: const Icon(
+                      CupertinoIcons.xmark_circle_fill,
+                      color: Colors.white54,
+                    ),
                     onPressed: () => Navigator.pop(context),
                   ),
                 ],
@@ -139,11 +141,16 @@ class AppSettingsSheet extends StatelessWidget {
               _buildSettingSection(
                 title: 'ATMOSPHERE & PARTICLES',
                 child: Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 16,
+                    vertical: 12,
+                  ),
                   decoration: BoxDecoration(
                     color: Colors.white.withValues(alpha: 0.08),
                     borderRadius: BorderRadius.circular(16),
-                    border: Border.all(color: Colors.white.withValues(alpha: 0.12)),
+                    border: Border.all(
+                      color: Colors.white.withValues(alpha: 0.12),
+                    ),
                   ),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -153,12 +160,19 @@ class AppSettingsSheet extends StatelessWidget {
                         children: [
                           Text(
                             'Live Particle Canvas',
-                            style: TextStyle(color: Colors.white, fontWeight: FontWeight.w600, fontSize: 14),
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.w600,
+                              fontSize: 14,
+                            ),
                           ),
                           SizedBox(height: 2),
                           Text(
                             'Rain streaks, snow drifts, sun rays & stars',
-                            style: TextStyle(color: Colors.white54, fontSize: 11),
+                            style: TextStyle(
+                              color: Colors.white54,
+                              fontSize: 11,
+                            ),
                           ),
                         ],
                       ),
@@ -243,10 +257,14 @@ class AppSettingsSheet extends StatelessWidget {
       child: Container(
         padding: const EdgeInsets.symmetric(vertical: 10),
         decoration: BoxDecoration(
-          color: isSelected ? const Color(0xFF1976D2).withValues(alpha: 0.75) : Colors.white.withValues(alpha: 0.08),
+          color: isSelected
+              ? const Color(0xFF1976D2).withValues(alpha: 0.75)
+              : Colors.white.withValues(alpha: 0.08),
           borderRadius: BorderRadius.circular(12),
           border: Border.all(
-            color: isSelected ? const Color(0xFF64B5F6) : Colors.white.withValues(alpha: 0.12),
+            color: isSelected
+                ? const Color(0xFF64B5F6)
+                : Colors.white.withValues(alpha: 0.12),
             width: isSelected ? 1.5 : 1.0,
           ),
         ),
@@ -254,7 +272,9 @@ class AppSettingsSheet extends StatelessWidget {
           child: Text(
             label,
             style: TextStyle(
-              color: isSelected ? Colors.white : Colors.white.withValues(alpha: 0.7),
+              color: isSelected
+                  ? Colors.white
+                  : Colors.white.withValues(alpha: 0.7),
               fontSize: 13,
               fontWeight: isSelected ? FontWeight.bold : FontWeight.w500,
             ),
