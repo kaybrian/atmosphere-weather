@@ -1,8 +1,8 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:todoapp/data/models/air_quality_model.dart';
-import 'package:todoapp/data/models/weather_alert_model.dart';
-import 'package:todoapp/data/models/weather_model.dart';
-import 'package:todoapp/ui/core/app_theme.dart';
+import 'package:atmosphere/data/models/air_quality_model.dart';
+import 'package:atmosphere/data/models/weather_alert_model.dart';
+import 'package:atmosphere/data/models/weather_model.dart';
+import 'package:atmosphere/ui/core/app_theme.dart';
 
 void main() {
   group('WeatherCondition WMO Mapping Tests', () {
